@@ -1,0 +1,35 @@
+﻿Step 1:
+Download the following package from nuget
+Hellang.Middleware.ProblemDetails
+
+Step 2:
+Go to StartUp.cs file.
+	2.1 In the ConfigureService method add the following code.
+
+	 services.AddProblemDetails(opts =>
+            {
+                opts.IncludeExceptionDetails = (context, ex) =>
+                {
+                    var environment = context.RequestServices.GetRequiredService<IHostEnvironment>();
+                    return environment.IsDevelopment();
+                };
+            });
+
+    2.2 In Configure method add the following code.
+
+    app.UseProblemDetails();
+
+Step 3:
+Create a Custom exception class. [Check Source Code in CustomExceptions folder] 
+
+Step 4:
+Create custom Problem Details Object. [Check Source Code in CustomExceptions folder] 
+
+Step 5:
+map this exception with the problem details object.Open Startup.cs and change the method ConfigureServices:
+
+
+Step 6:
+If project is "Development" stage then you will get long response. but if you have "Production" stage then your response will shrink.
+
+Note : go to launchSettings.json file.
